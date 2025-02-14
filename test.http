@@ -1,0 +1,17 @@
+GET http://localhost:8000/shop/books HTTP/1.1
+
+###
+POST http://localhost:8000/added_book
+Content-Type: application/json
+
+###
+PUT http://localhost:8000/api/items/{id}
+Content-Type: application/json
+
+{
+    "name": "Updated Item",
+    "description": "Updated description"
+}
+
+###
+DELETE url HTTP/1.1
