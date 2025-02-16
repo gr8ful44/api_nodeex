@@ -2,28 +2,45 @@ const express = require("express");
 const app = express();
 const port = 8000;
 
-const books = [
-  {
-    name: "cat",
-    desc: "asd",
-  },
-  {
-    name: "dog",
-    desc: "erw",
-  },
-];
-const auto_inc = 1;
+app.use(express.json());
 
-app.get("/shop/books", (req, res) => {
-  res.json(books);
+const users = [];
+let auto_inc = 1;
+
+// app.method(url,callback)
+
+app.get("/user", (req, res) => {
+  res.json(users);
 });
 
-app.post("/added_book", (req, res) => {
-  const book = req.body;
+app.post("/add_user", (req, res) => {
+  const reqBody = req.body;
+  const newUser = {
+    id: auto_inc,
+    name: reqBody.name,
+    email: reqBody.email,
+  };
+  auto_inc += 1;
+  users.push(newUser);
 
   res.json({
-    message: "add 200 ok.",
-    status: res.statusCode,
+    message: "added 200 okokokokk~~",
+    user: newUser,
+  });
+});
+
+app.put("/user/:id", (req, res) => {
+  let id = req.params.id;
+  const updateData = req.body;
+  let selectedUser = users.findIndex((user) => user.id == id);
+  users[selectedUser] = updateData;
+
+  res.json({
+    message: "updated 200 okokokok!!",
+    data: {
+      user: updateData,
+      index_updated: selectedUser,
+    },
   });
 });
 
